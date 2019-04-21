@@ -1,28 +1,43 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React , { useState } from "react";
+import Header from './components/Header/Header';
+import Library from './components/Library/Library';
+import { Switch , Route } from 'react-router-dom';
+import PrivateRoute from './components/PrivateRoute';
+import BookPage from './containers/BookPage/BookPage';
+import Login from './containers/Login/Login';
+import NewBook from './containers/NewBook/NewBook';
+import AuthContext from './context/authContext';
 
-class App extends Component {
-  render() {
+const app = () => {
+    const [ token , setToken ] = useState(localStorage.getItem('auth-token'));
+    const [ isAuth , setIsAuth ] = useState(token != null);
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+        <div className="App">
+            <AuthContext.Provider value = {{
+                isAthenticated: isAuth,
+                token,
+                login: token => {
+                    setIsAuth(true);
+                    setToken(token);
+                    localStorage.setItem('auth-token' , token);
+                },
+                logout: () => {
+                    setIsAuth(false);
+                    setToken(null);
+                    localStorage.removeItem('auth-token');
+                }
+            }}>
+                <Header />
+                <div className="m-t-1">
+                    <Switch>
+                        <Route path='/' component={Library} exact/>
+                        <Route path='/book/:id' component={BookPage} exact/>
+                        <Route path='/login' component={Login} exact/>
+                        <PrivateRoute path='/new/book' component={NewBook} exact/>
+                    </Switch>
+                </div>
+            </AuthContext.Provider>
+        </div>
     );
-  }
 }
-
-export default App;
+export default app;

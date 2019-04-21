@@ -12,3 +12,14 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.book-thumbnail {
+    width: 60%;
+    margin: 20%;
+}
+
+.error {
+    font-weight: bold;
+    font-size: 0.9em;
+    color: red;
+}
