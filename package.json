@@ -7,7 +7,7 @@
     "graphql-request": "^1.8.2",
     "lodash": "^4.17.11",
     "react": "^16.8.*",
-    "react-dom": "^16.8.*",
+    "react-dom": "^16.13.*",
     "react-router": "^5.2.0",
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.1.3"
